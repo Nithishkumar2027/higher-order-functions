@@ -1,13 +1,28 @@
-
 const numbers = [1, 2, 3, 4, 5];
 // Create a number that is the sum of all the numbers in the array
+const addedNumbers = numbers.reduce((sum, number) => {
+    return sum += number
+}, 0);
+console.log(addedNumbers);
 
 const fruits = ['banana', 'cherry', 'orange', 'apple', 'cherry', 'orange', 'apple', 'banana', 'cherry', 'orange', 'fig'];
-// Create an object with the fruit as a key and the number of occurences of that fruit as a value
+const fruitSightings = fruits.reduce((fruitStock, fruit) => {
+    if (fruitStock.hasOwnProperty(fruit)) {
+        fruitStock[fruit]++;
+    } else {
+        fruitStock[fruit] = 1;
+    }
+    return fruitStock;
+}, {});
+console.log(fruitSightings);
+
 
 const prices = [29.76, 41.85, 46.5];
 // Create a number that is the average price of all the prices in the array
-// HINT: you will need to check the index to determine if you should return the sum or the average
+const avgPrice = prices.reduce((sum, value) => {
+    return sum + value
+}, 0)
+console.log(avgPrice / prices.length);
 
 const days = [
     'Sunday',
@@ -19,9 +34,19 @@ const days = [
     'Saturday'
 ];
 // create a new array with the first 3 letters of each day
+const shortDays = days.reduce((shorted, day, index) => {
+    shorted.push(day.substring(0, 3))
+    return shorted
+}, [])
+console.log(shortDays);
 
 const words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
 // create a new array with only the words with a length longer than 6
+const lengthyWords = words.reduce((lengthy, word) => {
+    word.length > 6 ? lengthy.push(word) : null
+    return lengthy;
+}, []);
+console.log(lengthyWords);
 
 const people = [{
     id: 1,
@@ -41,6 +66,11 @@ const people = [{
     last_name: 'Crockford'
 }];
 // Create an object where the keys are the id and the values are the people
+const peopleById = people.reduce((byID, person) => {
+    byID[person.id] = person
+    return byID
+}, {});
+console.log(peopleById);
 
 const animals = [{
     name: 'cat',
@@ -56,3 +86,16 @@ const animals = [{
     size: 'big'
 }];
 // Create an object where the keys are the size and the values are an array of all animals that size
+const animalsBySize = animals.reduce((bySize, animal) => {
+    // does bySize have a property that is the current animal size
+    if (!bySize.hasOwnProperty(animal.size)) {
+        // if not set the size property on bySize to be an empty array
+        bySize[animal.size] = [];
+    }
+
+    // push animal into array in bySize at the given animal size 
+    bySize[animal.size].push(animal);
+    return bySize;
+}, {});
+
+console.log(animalsBySize);
